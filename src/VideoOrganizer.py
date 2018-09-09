@@ -8,6 +8,7 @@ class VideoOrganizer:
     def __init__(self):
         self._root = Tk()
         self._root.columnconfigure(0, weight=1)
+        self._root.rowconfigure(0, weight=1)
 
     def create_main_frame(self) -> "VideoOrganizer":
         MainFrame(self._root)
@@ -19,6 +20,7 @@ class VideoOrganizer:
 
 
 if __name__ == "__main__":
-    VideoOrganizer()\
-        .create_main_frame()\
-        .start()
+    VideoOrganizer().create_main_frame().start()
+"""
+Checkbox by Roman Shvets from the Noun Project
+"""
