@@ -8,7 +8,6 @@ from gui.WarningPopUps import need_valid_directory
 from gui.templates.StandardButton import StandardButton
 from lib.DirectoryChecks import is_directory_exist
 from lib.FileGetter import get_files
-from lib.FoundFIles import FoundFiles
 from lib.ParseExtensions import parse_extensions
 
 
@@ -33,8 +32,6 @@ class ExtensionFilteredSourceSelector:
             ExtensionFilter.get_entry(self._main_frame).get()
         )
 
-        files = FoundFiles.store_files_before_returning(
-            get_files(src_dir, ext_filter)
-        )
+        files = get_files(src_dir, ext_filter)
 
         FileView.get_fileview(self._main_frame).add_files(files)
