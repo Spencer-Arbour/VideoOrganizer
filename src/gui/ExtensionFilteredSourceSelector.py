@@ -1,4 +1,4 @@
-from tkinter import Frame, Button
+from tkinter import Frame
 
 
 from gui.ExtensionFilter import ExtensionFilter
@@ -32,6 +32,6 @@ class ExtensionFilteredSourceSelector:
             ExtensionFilter.get_entry(self._main_frame).get()
         )
 
-        files = get_files(src_dir, ext_filter)
-
-        FileView.get_fileview(self._main_frame).add_files(files)
+        FileView.get_fileview(self._main_frame).set_files(
+            get_files(src_dir, ext_filter)
+        )
