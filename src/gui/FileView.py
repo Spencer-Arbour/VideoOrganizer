@@ -3,8 +3,7 @@ from tkinter.ttk import Treeview
 
 from lib.DotNotation import get_dot_notation
 
-git config --global user.email "you@example.com"
-  git config --global user.name "Your Name"
+
 class FileView(Treeview):
     # todo replace with custom widget that does stuff like checkboxes and embedded drop downs
     _TREE_VIEW = "file_tree_view"
