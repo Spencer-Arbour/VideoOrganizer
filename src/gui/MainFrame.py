@@ -2,6 +2,7 @@ from tkinter import Frame, E, W, N, S, SUNKEN
 
 from gui.ExtensionFilter import ExtensionFilter
 from gui.ExtensionFilteredSourceSelector import ExtensionFilteredSourceSelector
+from gui.FileToProcessSelector import FileToProcessSelector
 from gui.FileView import FileView
 from gui.SourceDirectory import SourceDirectory
 from gui.SourceSelector import SourceSelector
@@ -17,9 +18,15 @@ class MainFrame:
         self._main_frame.columnconfigure(0, weight=1)
         self._main_frame.rowconfigure(2, weight=1)
 
+    def setup_children(self) -> "MainFrame":
         SourceDirectory(self._main_frame)
         SourceSelector(self._main_frame)
 
         ExtensionFilter(self._main_frame)
         ExtensionFilteredSourceSelector(self._main_frame)
+
         FileView(self._main_frame)
+
+        FileToProcessSelector(self._main_frame)
+
+        return self

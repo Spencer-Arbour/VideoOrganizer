@@ -24,15 +24,36 @@ class FileView(Treeview):
     def __init__(self, main_frame):
         super().__init__(main_frame, columns=("Selected", "File", "Directory"), name=self._TREE_VIEW, show="headings")
 
-        self.heading(self._C1, text="□", command=self.select_all_toggle, anchor=CENTER)
+        self.heading(self._C1, text="□", command=self._select_all_toggle, anchor=CENTER)
         self.column(self._C1, minwidth=30, width=30, stretch=NO, anchor=CENTER)
 
         self.heading(self._C2, text="File")
         self.heading(self._C3, text="Directory")
         self.grid(row=2, column=0, columnspan=2, pady=(10, 10), sticky=E + W + N + S)
-        self.bind("<Button-1>", self.on_item_click)
+        self.bind("<Button-1>", self._on_item_click)
 
-    def on_item_click(self, event):
+    @classmethod
+    def get_fileview(cls, main_frame):
+        return main_frame.nametowidget(
+            get_dot_notation(cls._TREE_VIEW)
+        )
+
+    def set_files(self, files: dict):
+        self._delete_all_children()
+        self.heading(self._C1, text=self._NOT_SELECTED)
+
+        for key, values in files.items():
+            for iterator, value in enumerate(values):
+
+                self.insert("", "end", values=[self._NOT_SELECTED, value, key])
+
+    def get_files(self):
+        for child in self.get_children():
+            value = self.item(child)["values"]
+            if value[0] == self._SELECTED:
+                yield value[1]
+
+    def _on_item_click(self, event):
         # todo - find a way to only set if C1 is clicked and remove highlighting
         child = self.identify("item", event.x, event.y)
         if self.item(child)["values"] == "":
@@ -53,13 +74,7 @@ class FileView(Treeview):
                 return False
         return True
 
-    @classmethod
-    def get_fileview(cls, main_frame):
-        return main_frame.nametowidget(
-            get_dot_notation(cls._TREE_VIEW)
-        )
-
-    def select_all_toggle(self):
+    def _select_all_toggle(self):
         if self.heading(self._C1)["text"] == self._SELECTED:
             self._toggle_all(self._NOT_SELECTED)
 
@@ -71,16 +86,6 @@ class FileView(Treeview):
 
         for item in self.get_children():
             self.set(item, self._C1, toggle_val)
-
-
-    def add_files(self, files: dict):
-        self._delete_all_children()
-        self.heading(self._C1, text=self._NOT_SELECTED)
-
-        for key, values in files.items():
-            for iterator, value in enumerate(values):
-
-                self.insert("", "end", values=[self._NOT_SELECTED, value, key])
 
     def _delete_all_children(self):
         self.delete(*self.get_children())

@@ -32,6 +32,6 @@ class ExtensionFilteredSourceSelector:
             ExtensionFilter.get_entry(self._main_frame).get()
         )
 
-        FileView.get_fileview(self._main_frame).add_files(
+        FileView.get_fileview(self._main_frame).set_files(
             get_files(src_dir, ext_filter)
         )

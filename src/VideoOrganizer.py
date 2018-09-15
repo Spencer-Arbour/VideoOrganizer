@@ -11,7 +11,7 @@ class VideoOrganizer:
         self._root.rowconfigure(0, weight=1)
 
     def create_main_frame(self) -> "VideoOrganizer":
-        MainFrame(self._root)
+        MainFrame(self._root).setup_children()
         return self
 
     def start(self) -> "VideoOrganizer":
@@ -21,6 +21,3 @@ class VideoOrganizer:
 
 if __name__ == "__main__":
     VideoOrganizer().create_main_frame().start()
-"""
-Checkbox by Roman Shvets from the Noun Project
-"""
