@@ -1,5 +1,7 @@
 from tkinter import Frame, E, W, N, S, SUNKEN
 
+from gui.DestinationDirectory import DestinationDirectory
+from gui.DestinationSelector import DestinationSelector
 from gui.ExtensionFilter import ExtensionFilter
 from gui.ExtensionFilteredSourceSelector import ExtensionFilteredSourceSelector
 from gui.FileToProcessSelector import FileToProcessSelector
@@ -26,6 +28,9 @@ class MainFrame:
         ExtensionFilteredSourceSelector(self._main_frame)
 
         FileView(self._main_frame)
+
+        DestinationDirectory(self._main_frame)
+        DestinationSelector(self._main_frame)
 
         FileToProcessSelector(self._main_frame)
 

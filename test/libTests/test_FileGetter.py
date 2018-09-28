@@ -1,7 +1,5 @@
 import os
-
 import pytest
-
 from lib.FileGetter import get_files
 
 
@@ -21,36 +19,35 @@ class TestFileGetter:
         monkeypatch.setattr(os.path, "isdir", lambda x: True)
         monkeypatch.setattr(os, "walk", self._walk_fake)
 
-        file_list = get_files("fake", ("",))
-        assert len(file_list) == 5
+        num_files = 0
+        for file in get_files("root"):
+            num_files += 1
+
+        assert num_files == 11
 
     @pytest.mark.regression
     @pytest.mark.parametrize("type_filter, expected", [
-        ((".hhp",), {"/Fake": {"bop.HHP"}, "/Fake/bar/blip/bop": {"hop.hhp"}}),
-        ((".hhp", ".qrz"), {"/Fake": {"bop.HHP"}, "/Fake/bar/blip/bop": {"hop.hhp"}, "/Fake/boo": {"pil.qrz"}}),
-        (("kozyer",), {})
+        ((".hhp",), ["/Fake/bop.HHP", "/Fake/bar/blip/bop/hop.hhp"]),
+        ((".hhp", ".qrz"), ["/Fake/bop.HHP", "/Fake/bar/blip/bop/hop.hhp", "/Fake/boo/pil.qrz"]),
+        (("kozyer",), [])
     ])
     def test_if_file_type_filter__return_all_files_of_type_regardless_of_case(self, type_filter, expected, monkeypatch):
         monkeypatch.setattr(os.path, "isdir", lambda x: True)
         monkeypatch.setattr(os, "walk", self._walk_fake)
 
-        files = get_files("fake", type_filter)
-
-        assert files.keys() == expected.keys()
-        for key, values in expected.items():
-            assert values == files[key]
+        for src, name in get_files("fake", type_filter):
+            expected.remove(os.path.join(src, name))
+        assert len(expected) == 0
 
     @pytest.mark.regression
     def test_if_file_type_filter__files_without_extensions_not_returned(self, monkeypatch):
-        expected = {"/Fake": {"goo.ppk"}, "/Fake/boo": {"qui.ppk"}, "/Fake/bar/blip": {"gim.ppk"}}
+        expected = ["/Fake/goo.ppk", "/Fake/boo/qui.ppk", "/Fake/bar/blip/gim.ppk"]
         monkeypatch.setattr(os.path, "isdir", lambda x: True)
         monkeypatch.setattr(os, "walk", self._walk_fake)
 
-        files = get_files("fake", (".ppk",))
-
-        assert files.keys() == expected.keys()
-        for key, values in expected.items():
-            assert values == files[key]
+        for src, name in get_files("fake", (".ppk",)):
+            expected.remove(os.path.join(src, name))
+        assert len(expected) == 0
 
     # noinspection PyUnusedLocal
     @staticmethod

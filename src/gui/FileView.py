@@ -2,6 +2,7 @@ from tkinter import W, E, S, N, NO, CENTER
 from tkinter.ttk import Treeview
 
 from lib.DotNotation import get_dot_notation
+from lib.FileGetter import get_files
 
 
 class FileView(Treeview):
@@ -21,6 +22,9 @@ class FileView(Treeview):
     _ODD = "odd_row"
     _EVEN = "even_row"
 
+    _SRC = 2
+    _NAME = 1
+
     def __init__(self, main_frame):
         super().__init__(main_frame, columns=("Selected", "File", "Directory"), name=self._TREE_VIEW, show="headings")
 
@@ -38,20 +42,18 @@ class FileView(Treeview):
             get_dot_notation(cls._TREE_VIEW)
         )
 
-    def set_files(self, files: dict):
+    def set_files(self, files: get_files):
         self._delete_all_children()
         self.heading(self._C1, text=self._NOT_SELECTED)
 
-        for key, values in files.items():
-            for iterator, value in enumerate(values):
-
-                self.insert("", "end", values=[self._NOT_SELECTED, value, key])
+        for src, name in files:
+            self.insert("", "end", values=[self._NOT_SELECTED, name, src])
 
     def get_files(self):
         for child in self.get_children():
             value = self.item(child)["values"]
             if value[0] == self._SELECTED:
-                yield value[1]
+                yield value[self._SRC],  value[self._NAME]
 
     def _on_item_click(self, event):
         # todo - find a way to only set if C1 is clicked and remove highlighting
