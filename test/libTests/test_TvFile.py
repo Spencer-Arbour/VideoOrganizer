@@ -1,7 +1,4 @@
-from math import inf
-
 import pytest
-
 from lib.TvFile import TvFile
 
 
@@ -46,6 +43,7 @@ class TestTvFile:
 
     ])
     def test_get_trim_index_to_cleanup_name(self, s_char, e_char, src_name, index, monkeypatch):
+        # todo - not done, have not figured out all the combination asserts
         res = "1080p"
         year = "2010"
 
@@ -61,3 +59,23 @@ class TestTvFile:
         video._episode = episode
 
         print(video._get_src_name_trim_index())
+
+    @pytest.mark.regression
+    @pytest.mark.parametrize("year", ["2180", None])
+    def test_get_destination_path(self, year, monkeypatch):
+        # todo - not done, have not figured out all the combination asserts
+        clean = "foo"
+
+        monkeypatch.setattr(TvFile, "_get_file_info", lambda x: None)
+
+        video = TvFile("", "")
+        video._clean_src_name = clean
+        video._year = year
+        video._season = "15"
+
+        print(video.dest_path)
+
+        # if year:
+        #     assert video.dest_path == clean + " [{}]".format(year)
+        # else:
+        #     assert video.dest_path == clean

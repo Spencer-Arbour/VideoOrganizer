@@ -89,3 +89,18 @@ class TestVideoFile:
     def test_get_base_name(self, in_put, ans):
         assert VideoFile("", in_put).base_name == ans
 
+    @pytest.mark.regression
+    @pytest.mark.parametrize("year", ["2180", None])
+    def test_get_destination_path(self, year, monkeypatch):
+        clean = "foo"
+
+        monkeypatch.setattr(VideoFile, "_get_file_info", lambda x: None)
+
+        video = VideoFile("", "")
+        video._clean_src_name = clean
+        video._year = year
+
+        if year:
+            assert video.dest_path == clean + " [{}]".format(year)
+        else:
+            assert video.dest_path == clean

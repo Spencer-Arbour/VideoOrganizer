@@ -33,7 +33,7 @@ class FileView(Treeview):
 
         self.heading(self._C2, text="File")
         self.heading(self._C3, text="Directory")
-        self.grid(row=2, column=0, columnspan=2, pady=(10, 10), sticky=E + W + N + S)
+        self.grid(row=2, column=0, columnspan=2, pady=(20, 20), sticky=E + W + N + S)
         self.bind("<Button-1>", self._on_item_click)
 
     @classmethod

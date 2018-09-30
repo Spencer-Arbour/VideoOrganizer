@@ -1,5 +1,6 @@
 from gui.FileView import FileView
 from gui.templates.StandardButton import StandardButton
+from lib.VideoFileFactory import video_file_factory
 
 
 class FileToProcessSelector:
@@ -11,6 +12,6 @@ class FileToProcessSelector:
             .grid(row=5, column=1)
 
     def _process_files(self):
-        for file in FileView.get_fileview(self._main_frame).get_files():
-            print("'{}'".format(file))
-            print(type(file))
+        for directory, file in FileView.get_fileview(self._main_frame).get_files():
+            video = video_file_factory(directory, file)
+            print(video.base_name)

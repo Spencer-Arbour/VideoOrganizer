@@ -16,7 +16,7 @@ class MainFrame:
 
     def __init__(self, root):
         self._main_frame = Frame(root, name=self._MAIN)  # , bd=1, relief=SUNKEN)
-        self._main_frame.grid(row=0, column=0, padx=(10, 10), pady=(10, 10), sticky=N+S+E+W)
+        self._main_frame.grid(row=0, column=0, padx=(10, 10), pady=(20, 20), sticky=N+S+E+W)
         self._main_frame.columnconfigure(0, weight=1)
         self._main_frame.rowconfigure(2, weight=1)
 
