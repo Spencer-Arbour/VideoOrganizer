@@ -1,5 +1,7 @@
 from tkinter import Tk, Menu
-from tkinter.messagebox import _show
+from gui.menu_bar.Info import Info
+from gui.menu_bar.Options import Options
+from gui.menu_bar.Quit import Quit
 
 
 class MenuBar:
@@ -11,8 +13,8 @@ class MenuBar:
         self._root.config(menu=menu_bar)
 
         file_menu = Menu(menu_bar, tearoff=0)
-        file_menu.add_command(label="Options")
-        file_menu.add_command(label="Exit", command=self._quit)
+        file_menu.add_command(label="Options", command=self._options)
+        file_menu.add_command(label="Quit", command=self._quit)
 
         help_menu = Menu(menu_bar, tearoff=0)
         help_menu.add_command(label="Info", command=self._info)
@@ -21,12 +23,11 @@ class MenuBar:
         menu_bar.add_cascade(label="Help", menu=help_menu)
 
     def _options(self):
-        pass
+        Options(self._root)
 
     def _quit(self):
-        self._root.quit()
-        self._root.destroy()
-        exit()
+        Quit(self._root)
 
     def _info(self):
-        _show("", "None")
+        Info(self._root)
+

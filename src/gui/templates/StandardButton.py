@@ -13,3 +13,6 @@ class StandardButton(Button):
     def grid(self, **kw) -> "StandardButton":
         super().grid(**kw)
         return self
+
+    def _alt_code(self):
+        pass
