@@ -2,7 +2,7 @@ from tkinter import Frame, END
 from tkinter.ttk import Entry
 
 from gui.templates.LabelEntryCombo import LabelEntryCombo
-from lib.DotNotation import get_dot_notation
+from libs.DotNotation import get_dot_notation
 
 
 class ExtensionFilter:
