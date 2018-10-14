@@ -1,6 +1,6 @@
 import pytest
 
-from lib.ParseExtensions import parse_extensions
+from libs.ParseExtensions import parse_extensions
 
 
 class TestParseExtensions:

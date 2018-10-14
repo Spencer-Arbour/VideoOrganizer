@@ -1,7 +1,7 @@
 from tkinter import Frame
 
 from gui.templates.LabelEntryCombo import LabelEntryCombo
-from lib.DotNotation import get_dot_notation
+from libs.DotNotation import get_dot_notation
 
 
 class SourceDirectory:

@@ -5,7 +5,7 @@ from gui.AskDirectory import DirectorySelector
 from gui.SourceDirectory import SourceDirectory
 from gui.WarningPopUps import use_app_directory
 from gui.templates.StandardButton import StandardButton
-from lib.DirectoryChecks import is_there_entered_value_that_is_directory
+from libs.DirectoryChecks import is_there_entered_value_that_is_directory
 
 
 class SourceSelector:
