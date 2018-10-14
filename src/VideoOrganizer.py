@@ -1,13 +1,12 @@
-from tkinter import Tk
-
 from gui.menu_bar.MenuBar import MenuBar
+from gui.templates.UiRootSingleton import UiRootSingleton
 from src.gui.MainFrame import MainFrame
 
 
 class VideoOrganizer:
 
     def __init__(self):
-        self._root = Tk()
+        self._root = UiRootSingleton()
         self._root.title("Video Organizer")
         self._root.columnconfigure(0, weight=1)
         self._root.rowconfigure(0, weight=1)

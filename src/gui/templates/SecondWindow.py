@@ -1,10 +1,12 @@
 from tkinter import Toplevel, Frame, Tk
 
+from gui.templates.UiRootSingleton import UiRootSingleton
+
 
 class SecondWindow(Toplevel):
 
-    def __init__(self, parent: Tk, **kw):
-        super().__init__(parent, **kw)
+    def __init__(self, parent: Tk=None, **kw):
+        super().__init__(parent if parent else UiRootSingleton, **kw)
         self.resizable(False, False)
 
         self.transient(parent)
