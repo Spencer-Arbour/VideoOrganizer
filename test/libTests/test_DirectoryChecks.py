@@ -2,7 +2,7 @@ import os
 
 import pytest
 
-from lib.DirectoryChecks import is_there_entered_value_that_is_directory
+from libs.DirectoryChecks import is_there_entered_value_that_is_directory
 
 
 class TestDirectoryChecks:

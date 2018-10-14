@@ -1,7 +1,7 @@
 from tkinter import W, E, S, N, NO, CENTER
 from tkinter.ttk import Treeview
 
-from lib.DotNotation import get_dot_notation
+from libs.DotNotation import get_dot_notation
 
 
 class FileView(Treeview):

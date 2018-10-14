@@ -3,7 +3,7 @@ from itertools import count
 import pytest
 import requests
 
-from lib.TvDb import TvDb
+from libs.TvDb import TvDb
 
 
 class TestTvDb:

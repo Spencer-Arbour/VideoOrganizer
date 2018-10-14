@@ -2,7 +2,7 @@ import os
 
 import pytest
 
-from lib.FileGetter import get_files
+from libs.FileGetter import get_files
 
 
 class TestFileGetter:

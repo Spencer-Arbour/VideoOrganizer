@@ -6,9 +6,9 @@ from gui.FileView import FileView
 from gui.SourceDirectory import SourceDirectory
 from gui.WarningPopUps import need_valid_directory
 from gui.templates.StandardButton import StandardButton
-from lib.DirectoryChecks import is_directory_exist
-from lib.FileGetter import get_files
-from lib.ParseExtensions import parse_extensions
+from libs.DirectoryChecks import is_directory_exist
+from libs.FileGetter import get_files
+from libs.ParseExtensions import parse_extensions
 
 
 class ExtensionFilteredSourceSelector:
