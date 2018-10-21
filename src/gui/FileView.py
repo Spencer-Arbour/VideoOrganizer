@@ -1,7 +1,12 @@
 from tkinter import W, E, S, N, NO, CENTER
 from tkinter.ttk import Treeview
 
+<<<<<<< HEAD
 from libs.DotNotation import get_dot_notation
+=======
+from lib.DotNotation import get_dot_notation
+from lib.FileGetter import get_files
+>>>>>>> feature/get_file_info
 
 
 class FileView(Treeview):
@@ -21,6 +26,9 @@ class FileView(Treeview):
     _ODD = "odd_row"
     _EVEN = "even_row"
 
+    _SRC = 2
+    _NAME = 1
+
     def __init__(self, main_frame):
         super().__init__(main_frame, columns=("Selected", "File", "Directory"), name=self._TREE_VIEW, show="headings")
 
@@ -29,7 +37,7 @@ class FileView(Treeview):
 
         self.heading(self._C2, text="File")
         self.heading(self._C3, text="Directory")
-        self.grid(row=2, column=0, columnspan=2, pady=(10, 10), sticky=E + W + N + S)
+        self.grid(row=2, column=0, columnspan=2, pady=(20, 20), sticky=E + W + N + S)
         self.bind("<Button-1>", self._on_item_click)
 
     @classmethod
@@ -38,18 +46,27 @@ class FileView(Treeview):
             get_dot_notation(cls._TREE_VIEW)
         )
 
+<<<<<<< HEAD
     def set_files(self, files: tuple):
         self._delete_all_children()
         self.heading(self._C1, text=self._NOT_SELECTED)
 
         for key, value in files:
             self.insert("", "end", values=[self._NOT_SELECTED, value, key])
+=======
+    def set_files(self, files: get_files):
+        self._delete_all_children()
+        self.heading(self._C1, text=self._NOT_SELECTED)
+
+        for src, name in files:
+            self.insert("", "end", values=[self._NOT_SELECTED, name, src])
+>>>>>>> feature/get_file_info
 
     def get_files(self):
         for child in self.get_children():
             value = self.item(child)["values"]
             if value[0] == self._SELECTED:
-                yield value[1]
+                yield value[self._SRC],  value[self._NAME]
 
     def _on_item_click(self, event):
         # todo - find a way to only set if C1 is clicked and remove highlighting
