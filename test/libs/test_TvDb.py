@@ -71,6 +71,7 @@ class TestTvDb:
         assert first_fake == second_fake == "0"
         assert first_flam == "1"
 
+
 class TvDbFake:
     def __init__(self, json: dict, status_code: int = 200):
         self._json = json

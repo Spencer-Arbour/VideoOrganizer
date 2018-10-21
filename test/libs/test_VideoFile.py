@@ -21,7 +21,7 @@ class TestVideoFile:
 
     @pytest.mark.regression
     @pytest.mark.parametrize("in_put", [
-        "2100", "2099", "2000", "1999", "1100", "1099"
+        "2100", "2099", "2000", "1999", "1700", "1099"
     ])
     def test_get_year_in_file_name(self, in_put, monkeypatch):
         monkeypatch.setattr(VideoFile, "_get_file_info", lambda x: None)
@@ -29,7 +29,7 @@ class TestVideoFile:
         video = VideoFile("", "foo.{}.4rj3iofjro.sdf".format(in_put))
         video._get_year()
 
-        if 1100 <= int(in_put) <= 2099:
+        if 1700 <= int(in_put) <= 2099:
             assert video._year == video.year == in_put
         else:
             assert video._year is video.year is None
@@ -82,9 +82,9 @@ class TestVideoFile:
 
     @pytest.mark.regression
     @pytest.mark.parametrize("in_put, ans", [
-        ("The.legend.of.Carl.2018.LOOK_AT_ME.720p.Red.Cool.Varg.Loo.avi", "The Legend Of Carl [2018][720p].avi"),
+        ("The.legend.of.Carl.2018.LOOK_AT_ME.720p.Red.Cool.Varg.Loo.avi", "The Legend Of Carl[2018][720p].avi"),
         ("this.title has.nothing in It.mp4", "This Title Has Nothing In It.mp4"),
-        ("[foobBar.Legend]Copper.Legend, Rock{(1080P).Borot.2054}.mkv", "Copper Legend, Rock [2054][1080p].mkv")
+        ("[foobBar.Legend]Copper.Legend, Rock{(1080P).Borot.2054}.mkv", "Copper Legend, Rock[1080p].mkv")
     ])
     def test_get_base_name(self, in_put, ans):
         assert VideoFile("", in_put).base_name == ans

@@ -7,7 +7,7 @@ from abc import ABC
 class VideoFile(ABC):
 
     _TYPE_RE = re.compile(r"S[0-9]{1,2}E[0-9]{1,2}", re.I)
-    _YEAR_RE = re.compile(r"20[0-9]{2}|1[1-9][0-9]{2}", re.I)
+    _YEAR_RE = re.compile(r"\.20[0-9]{2}\.|\.1[7-9][0-9]{2}\.", re.I)
     _RES_RE = re.compile(r"1080p?|720p?", re.I)
     _SEEDER_INFO = re.compile("\[[0-9a-z.\s]+\]", re.I)
 
@@ -43,7 +43,7 @@ class VideoFile(ABC):
     @property
     def base_name(self):
         return (self._clean_src_name
-                + (" [{}]".format(self.year) if self.year else "")
+                + ("[{}]".format(self.year) if self.year else "")
                 + ("[{}]".format(self.res) if self.res else "")
                 + "." + self.extension
                 )
@@ -64,7 +64,9 @@ class VideoFile(ABC):
         self._ext = self._src_name.rsplit(".", 1)[-1]
 
     def _get_year(self):
-        self._year = self._search(self._YEAR_RE)
+        year = self._search(self._YEAR_RE)
+        if year:
+            self._year = year[1:-1]
 
     def _get_resolution(self):
         self._res = self._search(self._RES_RE)

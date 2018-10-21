@@ -22,7 +22,6 @@ class TvFile(VideoFile):
     def episode(self):
         return int(self._episode) if self._episode else None
 
-
     @property
     def base_name(self):
         return (self._clean_src_name

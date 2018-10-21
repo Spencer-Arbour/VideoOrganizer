@@ -13,5 +13,6 @@ class FileToProcessSelector:
 
     def _process_files(self):
         for directory, file in FileView.get_fileview(self._main_frame).get_files():
+            print(file)
             video = video_file_factory(directory, file)
             print(video.base_name)
