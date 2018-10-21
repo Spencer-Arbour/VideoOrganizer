@@ -18,7 +18,7 @@ class ExtensionFilter:
             LabelEntryCombo(main_frame, self._FRAME)
             .setup_label("Extension Filter:", self._LABEL)
             .setup_entry(self._ENTRY)
-            .set_entry_default_focus_binding("Ex: avi, mp4, mkv, etc. Finds all if blank")
+            # .set_entry_default_focus_binding("Ex: avi, mp4, mkv, etc. Finds all if blank")
             .grid(row=1, column=0)
         )
 

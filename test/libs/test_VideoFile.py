@@ -2,7 +2,7 @@ from math import inf
 
 import pytest
 
-from lib.VideoFile import VideoFile
+from libs.VideoFile import VideoFile
 
 
 class TestVideoFile:

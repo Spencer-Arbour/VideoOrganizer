@@ -1,5 +1,5 @@
 import pytest
-from lib.TvFile import TvFile
+from libs.TvFile import TvFile
 
 
 class TestTvFile:

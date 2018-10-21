@@ -1,12 +1,8 @@
 from tkinter import W, E, S, N, NO, CENTER
 from tkinter.ttk import Treeview
-
-<<<<<<< HEAD
 from libs.DotNotation import get_dot_notation
-=======
-from lib.DotNotation import get_dot_notation
-from lib.FileGetter import get_files
->>>>>>> feature/get_file_info
+from libs.FileGetter import get_files
+
 
 
 class FileView(Treeview):
@@ -46,21 +42,12 @@ class FileView(Treeview):
             get_dot_notation(cls._TREE_VIEW)
         )
 
-<<<<<<< HEAD
-    def set_files(self, files: tuple):
-        self._delete_all_children()
-        self.heading(self._C1, text=self._NOT_SELECTED)
-
-        for key, value in files:
-            self.insert("", "end", values=[self._NOT_SELECTED, value, key])
-=======
     def set_files(self, files: get_files):
         self._delete_all_children()
         self.heading(self._C1, text=self._NOT_SELECTED)
 
         for src, name in files:
             self.insert("", "end", values=[self._NOT_SELECTED, name, src])
->>>>>>> feature/get_file_info
 
     def get_files(self):
         for child in self.get_children():

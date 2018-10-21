@@ -1,8 +1,8 @@
 import pytest
 
-from lib.FilmFile import FilmFile
-from lib.TvFile import TvFile
-from lib.VideoFileFactory import video_file_factory
+from libs.FilmFile import FilmFile
+from libs.TvFile import TvFile
+from libs.VideoFileFactory import video_file_factory
 
 
 class TestVideoFIleFactory:

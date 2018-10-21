@@ -1,6 +1,6 @@
 from gui.FileView import FileView
 from gui.templates.StandardButton import StandardButton
-from lib.VideoFileFactory import video_file_factory
+from libs.VideoFileFactory import video_file_factory
 
 
 class FileToProcessSelector:
