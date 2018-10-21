@@ -2,7 +2,7 @@ import json
 import requests
 
 
-class TvDb:
+class TvDbConnector:
 
     class _Decorators:
 
@@ -55,7 +55,7 @@ class TvDb:
             dict(apikey=api_key, userkey=user_key, username=user_name)
         )
 
-    def retrieve_access_token(self) -> "TvDb":
+    def retrieve_access_token(self) -> "TvDbConnector":
         self._HEADERS[self._AUTHORIZATION] = "Bearer {}".format(self._retrieve_token().get("token", None))
         return self
 

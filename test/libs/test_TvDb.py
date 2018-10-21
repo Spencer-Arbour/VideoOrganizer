@@ -3,7 +3,7 @@ from itertools import count
 import pytest
 import requests
 
-from libs.TvDb import TvDb
+from libs.TvDbConnector import TvDbConnector
 
 
 class TestTvDb:
@@ -13,7 +13,7 @@ class TestTvDb:
         fake = TvDbFake({"token": "foo"})
         monkeypatch.setattr(requests, "post", lambda url, headers, data: fake)
 
-        tv_db = TvDb("fake", "lie", "nope").retrieve_access_token()
+        tv_db = TvDbConnector("fake", "lie", "nope").retrieve_access_token()
         assert tv_db._HEADERS.get("Authorization") == "Bearer foo"
 
     @pytest.mark.regression
@@ -22,7 +22,7 @@ class TestTvDb:
         monkeypatch.setattr(requests, "post", lambda url, headers, data: fake)
 
         with pytest.raises(requests.ConnectionError) as excinfo:
-            TvDb("fake", "lie", "nope").retrieve_access_token()
+            TvDbConnector("fake", "lie", "nope").retrieve_access_token()
 
         assert "Fake Error" in str(excinfo.value)
 
@@ -31,7 +31,7 @@ class TestTvDb:
         fake = TvDbFake({"show_info": "foo"})
         monkeypatch.setattr(requests, "get", lambda url, headers, params: fake)
 
-        tv_db = TvDb("fake", "lie", "nope")._get("fake_url")
+        tv_db = TvDbConnector("fake", "lie", "nope")._get("fake_url")
         assert tv_db == {"show_info": "foo"}
 
     @pytest.mark.regression
@@ -41,16 +41,16 @@ class TestTvDb:
         monkeypatch.setattr(requests, "get", lambda url, headers, params: fake)
 
         with pytest.raises(requests.ConnectionError) as excinfo:
-            TvDb("fake", "lie", "nope")._get("fake")
+            TvDbConnector("fake", "lie", "nope")._get("fake")
 
         assert "Fake Error" in str(excinfo.value)
 
-    @pytest.mark.regrssion
+    @pytest.mark.regression
     def test_search_for_series_only_does_same_search_once(self, monkeypatch):
         call_counts = count()
-        monkeypatch.setattr(TvDb, "_get", lambda x, url, params: str(next(call_counts)))
+        monkeypatch.setattr(TvDbConnector, "_get", lambda x, url, params: str(next(call_counts)))
 
-        tv_db = TvDb("fake", "lie", "nope")
+        tv_db = TvDbConnector("fake", "lie", "nope")
         first_fake = tv_db.search_for_series("Fake")
         first_flam = tv_db.search_for_series("Flam")
         second_fake = tv_db.search_for_series("Fake")
@@ -58,12 +58,12 @@ class TestTvDb:
         assert first_fake == second_fake == "0"
         assert first_flam == "1"
 
-    @pytest.mark.regrssion
+    @pytest.mark.regression
     def test_search_for_episodes_only_does_same_search_once(self, monkeypatch):
         call_counts = count()
-        monkeypatch.setattr(TvDb, "_get", lambda x, url: str(next(call_counts)))
+        monkeypatch.setattr(TvDbConnector, "_get", lambda x, url: str(next(call_counts)))
 
-        tv_db = TvDb("fake", "lie", "nope")
+        tv_db = TvDbConnector("fake", "lie", "nope")
         first_fake = tv_db.get_episode_info(45)
         first_flam = tv_db.get_episode_info(76)
         second_fake = tv_db.get_episode_info(45)

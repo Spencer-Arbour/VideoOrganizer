@@ -1,5 +1,4 @@
 import pytest
-
 from gui.ShowChooser import ShowChooser
 from libs.TvDbResponseParser import TvDbResponseParser
 
@@ -94,7 +93,7 @@ class TestTvDbResponseParserGetId:
         assert show_id == ans
 
 
-    @pytest.mark.regresion
+    @pytest.mark.regression
     def test_only_return_shows_with_overview(self):
         shows = TvDbResponseParser._eliminate_shows_without_overview(self._DATA)
         assert len(shows) == 4

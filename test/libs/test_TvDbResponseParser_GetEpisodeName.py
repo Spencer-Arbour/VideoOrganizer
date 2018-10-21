@@ -9,13 +9,13 @@ class TestTvDbResponseParserGetEpisodeName:
     _NAME = "episodeName"
     _DATA = "data"
 
-    @pytest.mark.regresion
+    @pytest.mark.regression
     def test_get_episode_name_returns_none_if_empty_data(self):
         episodes = {self._DATA: []}
         name = TvDbResponseParser.get_episode_name(episodes, 0, 0)
         assert name is None
 
-    @pytest.mark.regresion
+    @pytest.mark.regression
     def test_get_episode_name_returns_none_if_no_data(self):
         episodes = {}
         name = TvDbResponseParser.get_episode_name(episodes, 0, 0)
@@ -42,7 +42,7 @@ class TestTvDbResponseParserGetEpisodeName:
         name = TvDbResponseParser.get_episode_name(episodes, 0, 0)
         assert name == "bin"
 
-    @pytest.mark.regresion
+    @pytest.mark.regression
     @pytest.mark.parametrize("in_put, ans", [
         ([{_SEASON: 2, _EPISODE: 4}, 2, 4], True),
         ([{_SEASON: 2, _EPISODE: 2}, 2, 4], False),

@@ -38,14 +38,12 @@ class FileView(Treeview):
             get_dot_notation(cls._TREE_VIEW)
         )
 
-    def set_files(self, files: dict):
+    def set_files(self, files: tuple):
         self._delete_all_children()
         self.heading(self._C1, text=self._NOT_SELECTED)
 
-        for key, values in files.items():
-            for iterator, value in enumerate(values):
-
-                self.insert("", "end", values=[self._NOT_SELECTED, value, key])
+        for key, value in files:
+            self.insert("", "end", values=[self._NOT_SELECTED, value, key])
 
     def get_files(self):
         for child in self.get_children():
