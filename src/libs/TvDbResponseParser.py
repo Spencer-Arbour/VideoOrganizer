@@ -10,16 +10,24 @@ class TvDbResponseParser:
     _FIRST_AIRED = "firstAired"
     _DATE_FORMAT = "%Y-%m-%d"
     _DATE_PATTERN = re.compile(r"[0-9]{4}-[0-1][0-2]-[0-3][0-9]", re.I)
+    _PREVIOUS_ID = {}
 
     @classmethod
     def get_show_id(cls, search: str, response: dict, year_premiered: str=None) -> Union[int, None]:
+        previous_id = cls._PREVIOUS_ID.get((search.lower(), year_premiered), None)
+        if previous_id:
+            return previous_id
+
         data = response.get(cls._DATA, None)
 
         if not data:
             return None
 
         shows = cls._get_possible_shows(data, year_premiered)
-        return cls._get_id(search, shows)
+
+        new_id = cls._get_id(search, shows)
+        cls._PREVIOUS_ID[(search.lower(), year_premiered)] = new_id
+        return new_id
 
     @classmethod
     def _get_possible_shows(cls, data: list, year_premiered: str=None) -> list:
@@ -46,7 +54,7 @@ class TvDbResponseParser:
         return shows
 
     @classmethod
-    def _get_id(cls, search: str, shows: list, eliminate_shows_without_overview: bool=True) -> Union[None, int]:
+    def _get_id(cls, search: str, shows: list, eliminate_shows_without_overview: bool=True,) -> Union[None, int]:
         if not shows:
             return None
 
@@ -59,6 +67,7 @@ class TvDbResponseParser:
                 return cls._get_id(search, shows, False)
 
             show_chooser = ShowChooser(search, shows)
+            show_chooser.wait_window()
 
             show = show_chooser.show
             if show:

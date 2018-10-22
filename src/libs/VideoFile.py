@@ -41,6 +41,10 @@ class VideoFile(ABC):
         return self._ext
 
     @property
+    def clean_src_name(self):
+        return self._clean_src_name
+
+    @property
     def base_name(self):
         return (self._clean_src_name
                 + ("[{}]".format(self.year) if self.year else "")

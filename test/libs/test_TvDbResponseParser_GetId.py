@@ -88,10 +88,10 @@ class TestTvDbResponseParserGetId:
         monkeypatch.setattr(ShowChooser, "_header", lambda *args: None)
         monkeypatch.setattr(ShowChooser, "_body", lambda *args: None)
         monkeypatch.setattr(ShowChooser, "_footer", lambda *args: None)
+        monkeypatch.setattr(ShowChooser, "wait_window", lambda *args: None)
 
         show_id = TvDbResponseParser._get_id("", [{self._ID: 12}, {self._ID: 22}], False)
         assert show_id == ans
-
 
     @pytest.mark.regression
     def test_only_return_shows_with_overview(self):

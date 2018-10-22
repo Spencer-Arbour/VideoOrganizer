@@ -2,7 +2,19 @@ import json
 import requests
 
 
-class TvDbConnector:
+class TvDbConnectorSingleton:
+
+    _TV_DB_CONNECTOR = None
+
+    def __new__(cls, *args, **kwargs):
+
+        if not cls._TV_DB_CONNECTOR:
+            cls._TV_DB_CONNECTOR = _TvDbConnector(*args, **kwargs).retrieve_access_token()
+
+        return cls._TV_DB_CONNECTOR
+
+
+class _TvDbConnector:
 
     class _Decorators:
 
@@ -55,7 +67,7 @@ class TvDbConnector:
             dict(apikey=api_key, userkey=user_key, username=user_name)
         )
 
-    def retrieve_access_token(self) -> "TvDbConnector":
+    def retrieve_access_token(self) -> "_TvDbConnector":
         self._HEADERS[self._AUTHORIZATION] = "Bearer {}".format(self._retrieve_token().get("token", None))
         return self
 
@@ -69,8 +81,19 @@ class TvDbConnector:
         return self._get(self._URL_BASE + "search/series", params=dict(name=series_name))
 
     @_Decorators.dedupe(_EPISODE_INFO)
-    def get_episode_info(self, show_id: int) -> requests.get:
-        return self._get(self._URL_BASE + "episodes/{}".format(show_id))
+    def get_episode_info(self, show_id: int, page: int=1) -> requests.get:
+        response = self._get(self._URL_BASE + "series/{}/episodes?page={}".format(show_id, page))
+
+        # todo - need to write unit tests for getting new pages
+        links = response.get("links", None)
+        if links:
+            next_page = links.get("next", None)
+
+            if next_page:
+                page = self.get_episode_info(show_id, page=next_page)
+                response.get("data").extend(page.get("data", None))
+
+        return response
 
     @_Decorators.check_valid_response((401, 404))
     def _get(self, url: str, params: dict= None) -> requests.get:

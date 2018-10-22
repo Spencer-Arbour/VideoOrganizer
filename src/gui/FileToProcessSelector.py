@@ -1,5 +1,10 @@
 from gui.FileView import FileView
+from gui.menu_bar.Config import Config
 from gui.templates.StandardButton import StandardButton
+from libs.NameFinder import NameFinder
+from libs.TvDbConnector import TvDbConnectorSingleton
+from libs.TvDbResponseParser import TvDbResponseParser
+from libs.TvFile import TvFile
 from libs.VideoFileFactory import video_file_factory
 
 
@@ -12,7 +17,20 @@ class FileToProcessSelector:
             .grid(row=5, column=1)
 
     def _process_files(self):
+        name_finder = NameFinder(
+
+            tv_db=TvDbConnectorSingleton(
+                api_key=Config.API_KEY,
+                user_key=Config.UNIQUE_ID,
+                user_name=Config.USERNAME
+            ),
+
+            response_parser=TvDbResponseParser()
+
+        )
+
         for directory, file in FileView.get_fileview(self._main_frame).get_files():
-            print(file)
             video = video_file_factory(directory, file)
+            if type(video) == TvFile:
+                video.episode_name = name_finder.get_episode_name(video)
             print(video.base_name)

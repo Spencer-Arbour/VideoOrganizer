@@ -18,18 +18,18 @@ class TestTvFile:
         video._get_season_and_episode()
 
         if season:
-            assert video._season == season
-            assert video.season == int(season)
+            assert video._season_num == season
+            assert video.season_num == int(season)
         else:
-            assert video._season is None
-            assert video.season is None
+            assert video._season_num is None
+            assert video.season_num is None
 
         if episode:
-            assert video._episode == episode
-            assert video.episode == int(episode)
+            assert video._episode_num == episode
+            assert video.episode_num == int(episode)
         else:
-            assert video._episode is None
-            assert video.episode is None
+            assert video._episode_num is None
+            assert video.episode_num is None
 
     @pytest.mark.regression
     @pytest.mark.parametrize("s_char, e_char", [("S", "E"), ("s", "e"), ("S", "e"), ("s", "e"), ("E", "S")])
@@ -55,8 +55,8 @@ class TestTvFile:
         video = TvFile("", src_name.format(se=se, year=year, res=res))
         video._year = year
         video._res = res
-        video._season = season
-        video._episode = episode
+        video._season_num = season
+        video._episode_num = episode
 
         print(video._get_src_name_trim_index())
 
@@ -71,7 +71,7 @@ class TestTvFile:
         video = TvFile("", "")
         video._clean_src_name = clean
         video._year = year
-        video._season = "15"
+        video._season_num = "15"
 
         print(video.dest_path)
 

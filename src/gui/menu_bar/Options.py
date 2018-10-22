@@ -12,15 +12,15 @@ class Options(SecondWindow):
 
     def __init__(self, parent, **kw):
         super().__init__(parent, **kw)
-        self._name = LabelEntryCombo(self._frame).setup_label("Username")\
+        self._username = LabelEntryCombo(self._frame).setup_label("Username")\
             .setup_entry(width=self._ENTRY_WIDTH)\
             .grid(row=0, column=0, columnspan=2)
 
-        self._foo = LabelEntryCombo(self._frame).setup_label("Unique ID")\
+        self._unique_id = LabelEntryCombo(self._frame).setup_label("Unique ID")\
             .setup_entry(width=self._ENTRY_WIDTH)\
             .grid(row=1, column=0, columnspan=2)
 
-        self._bar = LabelEntryCombo(self._frame).setup_label("API Key")\
+        self._api_key = LabelEntryCombo(self._frame).setup_label("API Key")\
             .setup_entry(width=self._ENTRY_WIDTH)\
             .grid(row=2, column=0, columnspan=2)
 
@@ -32,8 +32,8 @@ class Options(SecondWindow):
 
 
     def _ok(self):
-        Config.NAME = self._name.entry.get()
-        Config.FOO = self._foo.entry.get()
-        Config.BAR = self._bar.entry.get()
+        Config.USERNAME = self._username.entry.get()
+        Config.UNIQUE_ID = self._unique_id.entry.get()
+        Config.API_KEY = self._api_key.entry.get()
 
         self._close()
