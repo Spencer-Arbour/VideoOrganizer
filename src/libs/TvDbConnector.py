@@ -24,7 +24,7 @@ class _TvDbConnector:
                 def wrapper(*args, **kwargs) -> json:
 
                     response = func(*args, **kwargs)
-                    
+
                     if response.status_code in bad_response_codes:
                         raise requests.ConnectionError(
                             "'{}' Failed to retrieve info from TvDb, Response Code: '{}'\n\tError: '{}'"

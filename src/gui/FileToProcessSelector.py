@@ -1,4 +1,7 @@
+import requests
+
 from gui.FileView import FileView
+from gui.TvDbConnProblem import TvDbConnProblem
 from gui.menu_bar.Config import Config
 from gui.templates.StandardButton import StandardButton
 from libs.NameFinder import NameFinder
@@ -17,20 +20,26 @@ class FileToProcessSelector:
             .grid(row=5, column=1)
 
     def _process_files(self):
-        name_finder = NameFinder(
-
-            tv_db=TvDbConnectorSingleton(
+        try:
+            tv_db = TvDbConnectorSingleton(
                 api_key=Config.API_KEY,
                 user_key=Config.UNIQUE_ID,
                 user_name=Config.USERNAME
-            ),
+            )
+        except requests.ConnectionError:
+            if not TvDbConnProblem().process:
+                return
+            else:
+                name_finder = False
 
-            response_parser=TvDbResponseParser()
-
-        )
+        else:
+            name_finder = NameFinder(
+                tv_db=tv_db,
+                response_parser=TvDbResponseParser()
+            )
 
         for directory, file in FileView.get_fileview(self._main_frame).get_files():
             video = video_file_factory(directory, file)
-            if type(video) == TvFile:
+            if name_finder or type(video) == TvFile:
                 video.episode_name = name_finder.get_episode_name(video)
             print(video.base_name)
